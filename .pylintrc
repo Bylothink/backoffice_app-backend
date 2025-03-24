@@ -7,7 +7,7 @@ ignore=migrations
 # List of plugins (as comma separated values of python module names) to load,
 # usually to register additional checkers.
 load-plugins=pylint_django
-django-settings-module=happy.settings
+django-settings-module=backoffice.settings
 
 
 [MESSAGES CONTROL]

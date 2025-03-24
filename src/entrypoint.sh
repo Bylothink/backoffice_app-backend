@@ -4,7 +4,7 @@
 set -e
 
 HELP="
-Runs the \"Happy\" application.
+Runs the \"Backoffice App - Backend\" application.
 
 By default, it runs using Uvicorn ASGI web server.
 For other run mode, please read the following command line options:
@@ -104,10 +104,10 @@ function run-uvicorn()
         local RELOAD="--reload"
     fi
 
-    su-exec www-data uvicorn happy.asgi:application --host "0.0.0.0" \
-                                                    --port 8000 \
-                                                    \
-                                                    ${RELOAD} ${@}
+    su-exec www-data uvicorn backoffice.asgi:application --host "0.0.0.0" \
+                                                             --port 8000 \
+                                                             \
+                                                             ${RELOAD} ${@}
 }
 
 #

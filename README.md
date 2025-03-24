@@ -1,6 +1,8 @@
-# Happy 😄
+# Backoffice App
 
-A template of a ready-to-use dockerized Django application.
+## Backend
+
+A generic backend for a backoffice app to manage some orders and products.
 
 ## Get started
 
@@ -18,8 +20,8 @@ docker compose exec postgres psql -U postgres
 ```
 
 ```psql
-CREATE USER happy WITH PASSWORD 'happy00';
-CREATE DATABASE happy WITH OWNER happy;
+CREATE USER backoffice WITH PASSWORD 'backoffice00';
+CREATE DATABASE backoffice WITH OWNER backoffice;
 \q
 ```
 

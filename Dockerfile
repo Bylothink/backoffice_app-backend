@@ -18,7 +18,7 @@ RUN curl -sSL "https://install.python-poetry.org" | \
  && rm -rf /root/.cache \
            /root/.local
 
-WORKDIR "/etc/happy"
+WORKDIR "/etc/backoffice/backend"
 COPY pyproject.toml ./
 COPY poetry.lock ./
 
@@ -59,20 +59,20 @@ RUN adduser -h /var/www \
 COPY --from=builder /usr/lib/python3.12/site-packages /usr/lib/python3.12/site-packages
 COPY --from=builder /usr/bin/uvicorn /usr/local/bin/uvicorn
 
-WORKDIR "/opt/happy"
+WORKDIR "/opt/backoffice/backend"
 COPY src/ ./
 
 RUN python -m compileall .
 
-ENV DATA_VOLUME="/var/lib/happy"
+ENV DATA_VOLUME="/var/lib/backoffice/backend"
 ENV DEBUG=""
 ENV SECRET_KEY=""
 
 ENV PGHOST="host.docker.internal"
 ENV PGPORT="5432"
-ENV PGUSER="happy"
+ENV PGUSER="backoffice"
 ENV PGPASSWORD=""
-ENV PGDATABASE="happy"
+ENV PGDATABASE="backoffice"
 
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["uvicorn"]
@@ -84,7 +84,7 @@ ARG VERSION
 ARG COMMIT_SHA
 ARG CREATE_DATE
 
-LABEL org.opencontainers.image.title="Happy"
+LABEL org.opencontainers.image.title="Backoffice App - Backend"
 LABEL org.opencontainers.image.description="A template of a ready-to-use dockerized Django application."
 LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL org.opencontainers.image.version="${VERSION}"

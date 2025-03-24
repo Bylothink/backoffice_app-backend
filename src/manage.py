@@ -9,7 +9,7 @@ import sys
 def main():
     """Run administrative tasks."""
 
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'happy.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backoffice.settings')
 
     try:
         # pylint: disable=import-outside-toplevel
