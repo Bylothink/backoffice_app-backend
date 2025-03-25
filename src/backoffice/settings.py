@@ -30,23 +30,27 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = bool(os.environ.get('DEBUG'))
 
 
+HOSTNAME = os.environ.get('HOSTNAME') or ""
+SCHEME = 'http' if DEBUG else 'https'
+
+
 # Allowed hosts
 # https://docs.djangoproject.com/en/5.1/ref/settings/#allowed-hosts
 
-ALLOWED_HOSTS = ['*'] if DEBUG else os.environ.get('HOSTNAME').split(",")
+ALLOWED_HOSTS = ['*'] if DEBUG else HOSTNAME.split(",")
 
 
 # CORS allowed origins
 # https://pypi.org/project/django-cors-headers/
 
-CORS_ALLOWED_ORIGINS = ALLOWED_HOSTS
+CORS_ALLOWED_ORIGINS = list(map(lambda host: f"{SCHEME}://{host}", ALLOWED_HOSTS))
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 
 
 # CSRF trusted origins
 # https://docs.djangoproject.com/en/5.1/ref/settings/#csrf-trusted-origins
 
-CSRF_TRUSTED_ORIGINS = list(map(lambda host: f"https://{host}", ALLOWED_HOSTS))
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 
 
 # Application definition
@@ -60,7 +64,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'corsheaders',
-    'rest_framework'
+    'rest_framework',
+
+    'backoffice.store'
 ]
 
 MIDDLEWARE = [

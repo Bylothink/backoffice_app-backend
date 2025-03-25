@@ -105,9 +105,9 @@ function run-uvicorn()
     fi
 
     su-exec www-data uvicorn backoffice.asgi:application --host "0.0.0.0" \
-                                                             --port 8000 \
-                                                             \
-                                                             ${RELOAD} ${@}
+                                                         --port 8000 \
+                                                         \
+                                                         ${RELOAD} ${@}
 }
 
 #
