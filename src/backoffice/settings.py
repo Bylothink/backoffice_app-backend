@@ -187,3 +187,9 @@ LOGGING = {
         'level': LOGGING_LEVEL
     }
 }
+
+
+# REST Framework
+# https://www.django-rest-framework.org/api-guide/settings/
+
+REST_FRAMEWORK = {'COERCE_DECIMAL_TO_STRING': False}
