@@ -42,7 +42,7 @@ class Order_Line(models.Model):  # pylint: disable=invalid-name
         verbose_name = "order line"
         verbose_name_plural = "order lines"
 
-    order = models.ForeignKey(Order, on_delete=models.RESTRICT, related_name='lines')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='lines')
     product = models.ForeignKey(Product, on_delete=models.RESTRICT, related_name='+')
 
     price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)

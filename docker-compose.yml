@@ -13,7 +13,7 @@ services:
 
   django:
     build: .
-    image: byloth/backoffice-backend:latest
+    image: bylothink/backoffice-backend:latest
     depends_on:
       - postgres
 

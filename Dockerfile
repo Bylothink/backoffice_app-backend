@@ -18,7 +18,7 @@ RUN curl -sSL "https://install.python-poetry.org" | \
  && rm -rf /root/.cache \
            /root/.local
 
-WORKDIR "/etc/backoffice/backend"
+WORKDIR "/etc/bylothink/backoffice-backend"
 COPY pyproject.toml ./
 COPY poetry.lock ./
 
@@ -59,12 +59,12 @@ RUN adduser -h /var/www \
 COPY --from=builder /usr/lib/python3.12/site-packages /usr/lib/python3.12/site-packages
 COPY --from=builder /usr/bin/uvicorn /usr/local/bin/uvicorn
 
-WORKDIR "/opt/backoffice/backend"
+WORKDIR "/opt/bylothink/backoffice-backend"
 COPY src/ ./
 
 RUN python -m compileall .
 
-ENV DATA_VOLUME="/var/lib/backoffice/backend"
+ENV DATA_VOLUME="/var/lib/bylothink/backoffice-backend"
 ENV DEBUG=""
 ENV SECRET_KEY=""
 
@@ -85,12 +85,12 @@ ARG COMMIT_SHA
 ARG CREATE_DATE
 
 LABEL org.opencontainers.image.title="Backoffice App - Backend"
-LABEL org.opencontainers.image.description="A template of a ready-to-use dockerized Django application."
+LABEL org.opencontainers.image.description="A generic backend for a backoffice app to manage some orders and products."
 LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL org.opencontainers.image.version="${VERSION}"
 LABEL org.opencontainers.image.revision="${COMMIT_SHA}"
-LABEL org.opencontainers.image.source="https://github.com/Byloth/django-docker-template"
-LABEL org.opencontainers.image.url="https://github.com/Byloth/django-docker-template"
+LABEL org.opencontainers.image.source="https://github.com/Bylothink/backoffice_app-backend"
+LABEL org.opencontainers.image.url="https://github.com/Bylothink/backoffice_app-backend"
 LABEL org.opencontainers.image.authors="Matteo Bilotta <me@byloth.dev>"
 LABEL org.opencontainers.image.vendor="Bylothink"
 LABEL org.opencontainers.image.created="${CREATE_DATE}"
