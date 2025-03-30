@@ -27,7 +27,8 @@ class Order(models.Model):
     lines: models.QuerySet['Order_Line']
 
     def save(self, *args, **kwargs) -> None:
-        self.total = self.lines.aggregate(models.Sum('total'))['total__sum'] or 0.00
+        if self.pk:
+            self.total = self.lines.aggregate(models.Sum('total'))['total__sum'] or 0.00
 
         super().save(*args, **kwargs)
 

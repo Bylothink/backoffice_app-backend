@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, ReadOnlyField
 
 from .models import Order, Order_Line, Product
 
@@ -15,7 +15,15 @@ class OrderDetailsSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class OrderLineSerializer(ModelSerializer):
+class OrderLineListSerializer(ModelSerializer):
+    product_name = ReadOnlyField(source='product.name')
+
+    class Meta:
+        model = Order_Line
+        fields = ('id', 'order_id', 'product_id', 'product_name', 'price', 'quantity', 'total')
+
+
+class OrderLineDetailsSerializer(ModelSerializer):
     class Meta:
         model = Order_Line
         fields = '__all__'

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ..models import Order
-from ..serializers import OrderLineSerializer
+from ..serializers import OrderLineDetailsSerializer, OrderLineListSerializer
 
 
 class OrderLineListView(APIView):
@@ -15,16 +15,19 @@ class OrderLineListView(APIView):
 
         order = get_object_or_404(Order, pk=order_id)
         lines = order.lines.all()[offset:offset + limit]
-        serializer = OrderLineSerializer(lines, many=True)
+        serializer = OrderLineListSerializer(lines, many=True)
 
         return Response(serializer.data)
 
     def post(self, request: Request, order_id: int) -> Response:
         order = get_object_or_404(Order, pk=order_id)
-        serializer = OrderLineSerializer(data=request.data)
+
+        request.data['order'] = order_id
+        serializer = OrderLineDetailsSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(order=order)
 
+            serializer = OrderLineListSerializer(order.lines.last())
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -34,17 +37,20 @@ class OrderLineDetailView(APIView):
     def get(self, request: Request, order_id: int, line_id: int) -> Response:
         order = get_object_or_404(Order, pk=order_id)
         line = get_object_or_404(order.lines, pk=line_id)
-        serializer = OrderLineSerializer(line)
+        serializer = OrderLineListSerializer(line)
 
         return Response(serializer.data)
 
     def put(self, request: Request, order_id: int, line_id: int) -> Response:
         order = get_object_or_404(Order, pk=order_id)
         line = get_object_or_404(order.lines, pk=line_id)
-        serializer = OrderLineSerializer(line, data=request.data)
+
+        request.data['order'] = order_id
+        serializer = OrderLineDetailsSerializer(line, data=request.data)
         if serializer.is_valid():
             serializer.save()
 
+            serializer = OrderLineListSerializer(line)
             return Response(serializer.data)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
