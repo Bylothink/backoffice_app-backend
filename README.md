@@ -37,6 +37,6 @@ docker compose exec django ./manage.py createsuperuser
 docker compose up [-d]
 ```
 
-> [!INFO]
+> [!NOTE]
 >
 > The admin interface is available at [`http://localhost:8000/admin/`](http://localhost:8000/admin/).
